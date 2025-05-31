@@ -10,7 +10,7 @@ class NewsRepositoryImpl(
 
     constructor() : this(
         Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("https://animechan.xyz/")
             .addConverterFactory(GsonConverterFactory.create()).build()
             .create(NewsApi::class.java)
 
@@ -18,7 +18,7 @@ class NewsRepositoryImpl(
 
     override suspend fun loadNews(): Pair<Boolean, String> {
         return try {
-            Pair(true, api.getNews().toString())
+            Pair(true, api.getNews().quote)
         } catch (e: Exception){
             Pair(false, e.message ?: "error load news from repository")
         }
