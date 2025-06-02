@@ -15,6 +15,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters
+        }
     }
 
     buildTypes {
@@ -33,6 +37,12 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+//    packaging {
+//        resources {
+//            excludes +=""
+//        }
+//    }
 }
 
 dependencies {
