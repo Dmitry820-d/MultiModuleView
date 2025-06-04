@@ -4,6 +4,9 @@ import android.os.Build
 import com.example.data.CourseApi
 import com.example.data.CourseRepositoryImpl
 import com.example.domain.CourseRepository
+import com.example.domain.LoadCourseResult
+import com.example.presentation.CourseUIState
+import com.example.presentation.mappers.CourseUIMapper
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -36,4 +39,7 @@ interface MainModule {
 
     @Binds
     fun bindCourseRepositoryImpl(courseRepositoryImpl: CourseRepositoryImpl) : CourseRepository
+
+    @Binds
+    fun bindMapper(courseUIMapper: CourseUIMapper): LoadCourseResult.Mapper<CourseUIState>
 }

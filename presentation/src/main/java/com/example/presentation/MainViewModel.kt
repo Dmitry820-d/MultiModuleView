@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.CourseRepository
+import com.example.domain.LoadCourseResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,19 +14,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: CourseRepository
+    private val repository: CourseRepository,
+    private val courseMapper: LoadCourseResult.Mapper<CourseUIState>
 ): ViewModel() {
 
-    private val _liveDataState = MutableLiveData<Pair<Boolean, String>>()
-    val liveDataState: LiveData<Pair<Boolean, String>>
+    private val _liveDataState = MutableLiveData<CourseUIState>()
+    val liveDataState: LiveData<CourseUIState>
         get() = _liveDataState
 
     val viewModelScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     fun load(){
         viewModelScope.launch {
-            val result = repository.loadNews()
-            _liveDataState.postValue(result)
+            val loadCourseResult = repository.loadNews()
+            val courseUIState = loadCourseResult.map(courseMapper)
+            _liveDataState.postValue(courseUIState)
         }
     }
 

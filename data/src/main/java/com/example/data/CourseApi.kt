@@ -1,9 +1,8 @@
 package com.example.data
 
-import com.google.gson.annotations.SerializedName
+import com.example.data.models.CoursesDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
-import java.util.Date
 
 
 //https://official-joke-api.appspot.com/random_joke
@@ -11,27 +10,13 @@ import java.util.Date
 //https://drive.usercontent.google.com/u/0/uc?id=15arTK7XT2b7Yv4BJsmDctA4Hg-BbS8-q&export=download
 
 interface CourseApi {
-//    @GET("/u/0/uc?id=15arTK7XT2b7Yv4BJsmDctA4Hg-BbS8-q&export=download")
+//   ("/u/0/uc?id=15arTK7XT2b7Yv4BJsmDctA4Hg-BbS8-q&export=download")
     @GET("/u/0/uc")
     suspend fun getNews(
         @Query("id") id: String = "15arTK7XT2b7Yv4BJsmDctA4Hg-BbS8-q",
         @Query("export") export: String = "download",
-    ): Courses
+    ): CoursesDTO
 }
-
-data class Courses(
-    @SerializedName("courses") val courses: List<Course>
-)
-
-data class Course(
-    @SerializedName("id") val  id: Int,
-    @SerializedName("title") val  title: String,
-    @SerializedName("text") val  description: String,
-    @SerializedName("price") val  price: String,
-    @SerializedName("rate") val  rate: String,
-    @SerializedName("hasLike") val  isFavorite: Boolean,
-    @SerializedName("startDate") val  startDate: Date,
-)
 
 
 //"id": 100,

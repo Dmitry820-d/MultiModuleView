@@ -1,6 +1,7 @@
 package com.example.data
 
 import com.example.domain.CourseRepository
+import com.example.domain.LoadCourseResult
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -15,21 +16,15 @@ class CourseRepositoryImpl @Inject constructor(
 
 
 
-    override suspend fun loadNews(): Pair<Boolean, String> {
+    override suspend fun loadNews(): LoadCourseResult {
         //val format = "json"
         return try {
-            val courses = api.getNews()
-            var result = ""
-            courses.courses.forEach {
-                result += it
-                result += "\n"
-                result += "\n"
-                println("dateDate = ${formatDateToString(it.startDate)}")
-            }
-            Pair(true, result)
+            val coursesDTO = api.getNews()
+            val coursesDomain = coursesDTO.mapToCoursesDomain()
+            LoadCourseResult.Success(courses = coursesDomain)
         } catch (e: Exception){
             println("ERROR             ${e.message}")
-            Pair(false, e.message ?: "error load news from repository")
+            LoadCourseResult.Error(message =  e.message ?: "error load news from repository")
         }
     }
 }

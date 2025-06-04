@@ -31,7 +31,21 @@ class MainActivity : AppCompatActivity() {
         //val mainViewModel = (application as ProviderMainViewModel).provide()
         binding.mainTextView.text = "TEST TEXT"
         mainViewModel.liveDataState.observe(this) {
-            binding.mainTextView.text = it.second
+            val text = when(it){
+                is CourseUIState.Success -> {
+                    var t = ""
+
+                    it.listCourse.forEach {
+                        t += it.toString()
+                        t += "\n"
+                        t += "\n"
+                    }
+                    t
+                }
+                is CourseUIState.Error -> { it.message }
+                else -> TODO("Not implemented")
+            }
+            binding.mainTextView.text = text
         }
 
         mainViewModel.load()
