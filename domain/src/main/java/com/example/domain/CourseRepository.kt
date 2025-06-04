@@ -1,5 +1,5 @@
 package com.example.domain
 
-interface NewsRepository {
+interface CourseRepository {
     suspend fun loadNews(): Pair<Boolean, String>
 }
